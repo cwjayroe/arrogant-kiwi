@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-  user: {
-    email: '',
-    password: ''
-  }
 };
 
 const userReducer = (state = initialState, action) => {
@@ -13,6 +9,7 @@ const userReducer = (state = initialState, action) => {
 
   switch (type) {
     case 'loginUser':
+
       var loggedInUser = { ...user, ...payload }
 
       return loggedInUser;

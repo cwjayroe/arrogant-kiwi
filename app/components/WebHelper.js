@@ -1,11 +1,24 @@
 import base64 from 'react-native-base64'
 
-class BasicAuth{
-  constructor(credentials) {
-    this.credentials = credentials
+class WebClient {
+  get_request = async (url)=> {
+    try {
+      const res = await fetch(url)
+      if (res.status >= 200 && res.status < 300) {
+        const jsonObject = await res.json();
+        return jsonObject
+      }
+
+      throw {
+        badCredentials: res.status == 401,
+        unknownError: res.status != 401
+      }
+    } catch (err) {
+      return (err)
+    } 
   }
 
-authenticate = async (credentials)=> {
+  authenticate = async (credentials)=> {
     const encodedAuth = base64.encode(`${credentials.email}:${credentials.password}`)
 
     try {
@@ -29,4 +42,4 @@ authenticate = async (credentials)=> {
   }
 }
 
-export default new BasicAuth()
+export default new WebClient()

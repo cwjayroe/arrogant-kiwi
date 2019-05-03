@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-
+import WebClient from '../components/WebHelper'
 
 class Repos extends React.Component {
   constructor(props) {
     super(props);
-
+    
     var ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 != r2,
     });
@@ -25,71 +25,43 @@ class Repos extends React.Component {
     };
   }
 
-  // static navigationOptions = ({ navigation }) => {
-  //   return {
-  //     title: 'Home',
-  //     headerRight: <LogoTitle navigation = {navigation} />,
-  //   }
-  // };
-
   componentDidMount() {
-    fetch(`https://api.github.com/users/${this.props.user.email}/repos`)
-      .then(response => {
-        if (response.status >= 200 && response.status < 300) {
-          let responseJson = response.json();
-          return responseJson;
-        }
-
-        throw {
-          badCredentials: response.status == 401,
-          unknownError: response.status != 401,
-        };
-      })
+    WebClient.get_request(`https://api.github.com/users/${this.props.user.email}/repos`)
       .then(responseJson => {
         this.setState({ repos: this.state.repos.cloneWithRows(responseJson) });
-        console.log(responseJson);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+        }
+      ) 
   }
 
   renderRow(rowData) {
     
     let description = <View />
-    if (rowData.description == '') {
+    let language = <View />
+
+    description = <Text style={{ fontSize: 12}}>No description</Text>
+    language = <Text style={styles.language}>No language</Text>
+
+    if (rowData.description !== null) {
         description = <Text style={{ fontSize: 12}}>{rowData.description}</Text>
-    } else {
-       description = <Text style={{ fontSize: 12}}>No description</Text>
+    } 
+
+    if ( rowData.language !== null) {
+      language = <Text style={styles.language}>{rowData.language}</Text>
     }
 
     return (
       <TouchableHighlight
         onPress={() => this.pressRow(rowData)}
         underlayColor="#ddd">
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            padding: 20,
-            alignItems: 'center',
-            borderColor: '#D7D7D7',
-            borderBottomWidth: 1,
-            backgroundColor: '#fff',
-          }}>
-          <View>
-            <View style={{flex: 1, flexDirection:"column", justifyContent: "center", alignItems:"center" }}>
-              <Text style={{ fontSize: 16, fontWeight: 'bold'}}>{rowData.name}</Text>
-              <Text style={{ fontSize: 13}}>{rowData.language}</Text>
-              { description }      
-            </View>
-            
-            <Text>Clone at: {rowData.html_url}</Text>
-            <View style={{flexDirection:'row'}}>
-              <Text>Last pushed to</Text>
-              <Text style={{fontWeight: '700'}}> {moment(rowData.created_at).fromNow()}</Text>
-            </View>
-            <Text></Text>
+
+        <View style = {styles.row}>
+          <Text style={styles.repo_name}>{rowData.name}</Text>
+          { language }
+          { description }
+          <Text>{rowData.url}</Text>
+          <View style={styles.flex_direction}>
+            <Text>Last pushed at</Text>
+            <Text style={styles.bold_font}> {moment(rowData.created_at).fromNow()}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -110,15 +82,40 @@ class Repos extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  flex_direction: {
+    flexDirection: 'row'
+  },
+  bold_font: {
+    fontWeight: '700'
+  },
   container: {
     flex: 1,
     backgroundColor: '#ecf0f1',
-    padding: 8,
+    padding: 8
+  },
+  row: {
+    backgroundColor: 'white',
+    flex: 1,
+    alignItems: 'center',
+    padding: 15,
+    marginBottom: 5
   },
   title: {
-    margin: 20,
+    paddingTop: 15,
+    paddingBottom: 15,
     fontSize: 26,
     fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  language: {
+    fontSize: 12,
+    paddingBottom:10
+  },
+  repo_name: {
+    paddingTop: 10,
+    fontSize: 22,
+    fontWeight: 'bold',
+    alignSelf: 'center'
   },
 });
 

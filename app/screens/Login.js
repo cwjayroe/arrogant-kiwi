@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert, Image, Acti
 import { loginUser } from '../config/UserActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import BasicAuth from '../components/BasicAuth'
+import WebClient from '../components/WebHelper'
 
 class Login extends React.Component{
   constructor(props){
@@ -24,15 +24,15 @@ class Login extends React.Component{
     delete currentState.unknownError
     currentState.showProgress = false
 
-    const results = await BasicAuth.authenticate({
+    const results = await WebClient.authenticate({
       email: this.state.email,
       password: this.state.password
     })
 
     this.setState({ ...currentState, ...results })
-    
+
     if ('userDetails' in this.state) {
-      this.props.loginUser(this.state.email, null, results)
+      this.props.loginUser(this.state)
       this.props.navigation.navigate('HomeRT')
     }
   }
@@ -57,8 +57,8 @@ class Login extends React.Component{
     return (
       <View style={styles.container}>
         <Image
-        source={require('../assets/snack-icon.png')}
-        style={styles.image}
+          source={require('../assets/snack-icon.png')}
+          style={styles.image}
         />
         <View style={styles.inputContainer}>
           <TextInput 
