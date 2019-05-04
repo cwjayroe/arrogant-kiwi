@@ -1,0 +1,58 @@
+Arguments: 
+  /usr/local/Cellar/node/11.14.0_1/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js add relay-compiler babel-plugin-relay —-dev
+
+PATH: 
+  /Users/christopherjayroe/.rvm/gems/ruby-2.6.0/bin:/Users/christopherjayroe/.rvm/gems/ruby-2.6.0@global/bin:/Users/christopherjayroe/.rvm/rubies/ruby-2.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/christopherjayroe/.rvm/bin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  11.14.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  TypeError [ERR_UNESCAPED_CHARACTERS]: https://registry.yarnpkg.com/—-dev: Request path contains unescaped characters
+      at new ClientRequest (_http_client.js:127:13)
+      at Object.request (https.js:303:10)
+      at Request.module.exports.Request.start (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:130103:32)
+      at Request.module.exports.Request.end (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:130862:10)
+      at end (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:129916:14)
+      at Immediate.<anonymous> (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:129930:7)
+      at processImmediate (internal/timers.js:443:21)
+
+npm manifest: 
+  {
+    "name": "arrogant-kiwi",
+    "version": "0.0.0",
+    "description": "No description",
+    "author": null,
+    "private": true,
+    "main": "node_modules/expo/AppEntry.js",
+    "dependencies": {
+      "@expo/vector-icons": "^10.0.1",
+      "expo": "^32.0.0",
+      "moment": "2.24.0",
+      "react": "^16.5.0",
+      "react-dom": "^16.8.6",
+      "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+      "react-native-base64": "0.0.2",
+      "react-native-elements": "1.1.0",
+      "react-native-fontawesome": "6.0.1",
+      "react-native-paper": "2.2.8",
+      "react-native-svg": "^9.4.0",
+      "react-native-vector-icons": "6.4.2",
+      "react-navigation": "3.9.1",
+      "react-redux": "6.0.0",
+      "react-relay": "^4.0.0",
+      "redux": "4.0.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
