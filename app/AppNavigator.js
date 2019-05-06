@@ -6,6 +6,7 @@ import Stars from './screens/Stars'
 import * as React from 'react'
 import LogoTitle from './components/LogoTitle'
 import { FontAwesome, Octicons } from '@expo/vector-icons';
+import RelayViewer from './screens/relay'
 
 
 const tabRoutes = createBottomTabNavigator(
@@ -23,7 +24,7 @@ const tabRoutes = createBottomTabNavigator(
       }
     },
     Stars: { 
-      screen: Stars,
+      screen: RelayViewer,
       navigationOptions: {
         tabBarIcon: (
           <FontAwesome name="star" size={25} style={{ marginTop: 10}} />

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/11.14.0_1/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js add relay-compiler babel-plugin-relay —-dev
+  /usr/local/Cellar/node/11.14.0_1/bin/node /usr/local/bin/yarn add babel-plugin-relay —-dev
 
 PATH: 
   /Users/christopherjayroe/.rvm/gems/ruby-2.6.0/bin:/Users/christopherjayroe/.rvm/gems/ruby-2.6.0@global/bin:/Users/christopherjayroe/.rvm/rubies/ruby-2.6.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/christopherjayroe/.rvm/bin
@@ -17,10 +17,10 @@ Trace:
   TypeError [ERR_UNESCAPED_CHARACTERS]: https://registry.yarnpkg.com/—-dev: Request path contains unescaped characters
       at new ClientRequest (_http_client.js:127:13)
       at Object.request (https.js:303:10)
-      at Request.module.exports.Request.start (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:130103:32)
-      at Request.module.exports.Request.end (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:130862:10)
-      at end (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:129916:14)
-      at Immediate.<anonymous> (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:129930:7)
+      at Request.module.exports.Request.start (/usr/local/lib/node_modules/yarn/lib/cli.js:130103:32)
+      at Request.module.exports.Request.end (/usr/local/lib/node_modules/yarn/lib/cli.js:130862:10)
+      at end (/usr/local/lib/node_modules/yarn/lib/cli.js:129916:14)
+      at Immediate.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:129930:7)
       at processImmediate (internal/timers.js:443:21)
 
 npm manifest: 
@@ -35,7 +35,7 @@ npm manifest:
       "@expo/vector-icons": "^10.0.1",
       "expo": "^32.0.0",
       "moment": "2.24.0",
-      "react": "^16.5.0",
+      "react": "16.5.0",
       "react-dom": "^16.8.6",
       "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
       "react-native-base64": "0.0.2",
@@ -48,6 +48,10 @@ npm manifest:
       "react-redux": "6.0.0",
       "react-relay": "^4.0.0",
       "redux": "4.0.1"
+    },
+    "scripts": {
+      "relay": "relay-compiler --src ./src --schema data/schema.graphql",
+      "relay:watch": "yarn relay --watch"
     }
   }
 

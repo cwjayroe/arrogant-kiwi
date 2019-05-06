@@ -7,20 +7,42 @@
   "main": "node_modules/expo/AppEntry.js",
   "dependencies": {
     "@expo/vector-icons": "^10.0.1",
+    "babel-preset-react-app": "^8.0.0",
     "expo": "^32.0.0",
+    "expo-google-sign-in": "^4.0.0",
+    "graphql": "^14.2.1",
+    "install-peers": "^1.0.3",
     "moment": "2.24.0",
-    "react": "^16.5.0",
+    "react": "16.5.0",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-base64": "0.0.2",
     "react-native-elements": "1.1.0",
     "react-native-fontawesome": "6.0.1",
     "react-native-paper": "2.2.8",
+    "react-native-reanimated": "^1.0.1",
     "react-native-svg": "^9.4.0",
     "react-native-vector-icons": "6.4.2",
     "react-navigation": "3.9.1",
     "react-redux": "6.0.0",
     "react-relay": "^4.0.0",
-    "redux": "4.0.1"
+    "redux": "4.0.1",
+    "url-loader": "^1.1.2"
+  },
+  "scripts": {
+    "relay": "relay-compiler --src ./app --schema data/schema.graphql",
+    "relay:watch": "yarn relay --watch"
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^4.0.0",
+    "relay-compiler": "^4.0.0"
+  },
+  "babel": {
+    "presets": [
+        "react-app"
+    ],
+    "plugins": [
+        "relay"
+    ]
   }
 }
