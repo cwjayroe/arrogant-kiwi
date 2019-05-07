@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7efee5749aae493686c25c0c9617551b
+ * @relayHash eb99142f2ba6c7ad4414f7d66804fa44
  */
 
 /* eslint-disable */
@@ -9,42 +9,95 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type relayQueryVariables = {||};
-export type relayQueryResponse = {|
+export type RelayQueryVariables = {||};
+export type RelayQueryResponse = {|
   +viewer: {|
-    +name: ?string,
-    +login: string,
+    +repositories: {|
+      +nodes: ?$ReadOnlyArray<?{|
+        +name: string,
+        +description: ?string,
+        +url: any,
+        +pushedAt: ?any,
+        +primaryLanguage: ?{|
+          +name: string
+        |},
+      |}>
+    |}
   |}
 |};
-export type relayQuery = {|
-  variables: relayQueryVariables,
-  response: relayQueryResponse,
+export type RelayQuery = {|
+  variables: RelayQueryVariables,
+  response: RelayQueryResponse,
 |};
 */
 
 
 /*
-query relayQuery {
+query RelayQuery {
   viewer {
-    name
-    login
+    repositories(first: 10, ownerAffiliations: OWNER) {
+      nodes {
+        name
+        description
+        url
+        pushedAt
+        primaryLanguage {
+          name
+          id
+        }
+        id
+      }
+    }
     id
   }
 }
 */
 
 const node/*: ConcreteRequest*/ = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  },
+  {
+    "kind": "Literal",
+    "name": "ownerAffiliations",
+    "value": "OWNER"
+  }
+],
+v1 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v1 = {
+v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "login",
+  "name": "description",
+  "args": null,
+  "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "url",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "pushedAt",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
   "args": null,
   "storageKey": null
 };
@@ -52,7 +105,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "relayQuery",
+    "name": "RelayQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -66,15 +119,51 @@ return {
         "concreteType": "User",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/)
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "repositories",
+            "storageKey": "repositories(first:10,ownerAffiliations:\"OWNER\")",
+            "args": (v0/*: any*/),
+            "concreteType": "RepositoryConnection",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "nodes",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Repository",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "primaryLanguage",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Language",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/)
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ]
   },
   "operation": {
     "kind": "Operation",
-    "name": "relayQuery",
+    "name": "RelayQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -86,28 +175,60 @@ return {
         "concreteType": "User",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/),
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
-            "name": "id",
-            "args": null,
-            "storageKey": null
-          }
+            "name": "repositories",
+            "storageKey": "repositories(first:10,ownerAffiliations:\"OWNER\")",
+            "args": (v0/*: any*/),
+            "concreteType": "RepositoryConnection",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "nodes",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Repository",
+                "plural": true,
+                "selections": [
+                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  (v4/*: any*/),
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "primaryLanguage",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Language",
+                    "plural": false,
+                    "selections": [
+                      (v1/*: any*/),
+                      (v5/*: any*/)
+                    ]
+                  },
+                  (v5/*: any*/)
+                ]
+              }
+            ]
+          },
+          (v5/*: any*/)
         ]
       }
     ]
   },
   "params": {
     "operationKind": "query",
-    "name": "relayQuery",
+    "name": "RelayQuery",
     "id": null,
-    "text": "query relayQuery {\n  viewer {\n    name\n    login\n    id\n  }\n}\n",
+    "text": "query RelayQuery {\n  viewer {\n    repositories(first: 10, ownerAffiliations: OWNER) {\n      nodes {\n        name\n        description\n        url\n        pushedAt\n        primaryLanguage {\n          name\n          id\n        }\n        id\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'cd7f659368047f218a6ffad270e8b232';
+(node/*: any*/).hash = '2ad48b6f772b2c30ee5e93177cfdd979';
 module.exports = node;

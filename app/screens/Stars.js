@@ -40,7 +40,6 @@ class Stars extends React.Component {
       })
       .then(responseJson => {
         this.setState({ repos: this.state.repos.cloneWithRows(responseJson) });
-        console.log(responseJson);
       })
       .catch(error => {
         console.log(error);

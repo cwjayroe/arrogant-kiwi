@@ -18,6 +18,21 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
+const repoReducer = (state = initialState, action) => {
+  const { repos } = state
+  const { type, payload } = action
+
+  switch (type) {
+    case 'storeRepos':
+      
+      var newRepos = { ...repos, ...payload }
+      return newRepos;
+    default:
+      return state
+  }
+};
+
 export default combineReducers({
   user: userReducer,
+  repos: repoReducer
 });

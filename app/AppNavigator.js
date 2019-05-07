@@ -5,8 +5,8 @@ import Profile from './screens/Profile'
 import Stars from './screens/Stars'
 import * as React from 'react'
 import LogoTitle from './components/LogoTitle'
-import { FontAwesome, Octicons } from '@expo/vector-icons';
-import RelayViewer from './screens/relay'
+import { FontAwesome, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import RelayViewer from './screens/Relay'
 
 
 const tabRoutes = createBottomTabNavigator(
@@ -24,7 +24,7 @@ const tabRoutes = createBottomTabNavigator(
       }
     },
     Stars: { 
-      screen: RelayViewer,
+      screen: Stars,
       navigationOptions: {
         tabBarIcon: (
           <FontAwesome name="star" size={25} style={{ marginTop: 10}} />
@@ -35,6 +35,18 @@ const tabRoutes = createBottomTabNavigator(
         }
       }
     },
+    Relay: { 
+      screen: RelayViewer,
+      navigationOptions: {
+        tabBarIcon: (
+          <MaterialCommunityIcons name="graphql" size={25} style={{ marginTop: 10}} />
+        ),
+        tabBarOptions: {
+          inactiveTintColor: 'gray',
+          showIcon: true
+        }
+      }
+    }
   }
 )
 

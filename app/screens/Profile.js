@@ -12,7 +12,7 @@ class Profile extends React.Component{
       }
   }
   componentDidMount(){
-    console.log(this.props.user)
+    console.log(this.props)
   }
 
   render() {
@@ -92,8 +92,9 @@ const styles = StyleSheet.create({
   }
 })
 const mapStateToProps = (state) => {
-  const { user } = state
-  return { user }
+  console.log(state)
+  const { user, repos } = state
+  return { user, repos }
 };
   
 export default connect(mapStateToProps)(Profile);

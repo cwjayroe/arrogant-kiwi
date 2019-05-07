@@ -8,7 +8,7 @@ function fetchQuery(operation, variables, cacheConfig, uploadables) {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": "Bearer "
+      "Authorization": "Bearer 8beadc3e72721108b8ffbaebd49d1763f55382f8"
     },
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input

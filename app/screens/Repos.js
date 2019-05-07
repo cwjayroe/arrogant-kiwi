@@ -28,6 +28,7 @@ class Repos extends React.Component {
   componentDidMount() {
     WebClient.get_request(`https://api.github.com/users/${this.props.user.email}/repos`)
       .then(responseJson => {
+        console.log(responseJson)
         this.setState({ repos: this.state.repos.cloneWithRows(responseJson) });
         }
       ) 

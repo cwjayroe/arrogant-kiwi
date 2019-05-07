@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Constants } from 'expo';
 import AppNavigator from './app/AppNavigator'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import userReducer from './app/config/UserReducer';
+import combineReducers from './app/config/reducers';
 
-const store = createStore(userReducer);
+const store = createStore(combineReducers);
 
 export default class App extends React.Component {
   constructor(props) {
