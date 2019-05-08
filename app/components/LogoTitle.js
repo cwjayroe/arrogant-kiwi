@@ -8,14 +8,13 @@ class LogoTitle extends React.Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('ProfileRT')}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
         <Image
           source={{
             uri: "https://avatars3.githubusercontent.com/u/49823449?v=4",
           }}
           style={{ width: 30, height: 30, marginRight: 10, borderRadius:20 }}
         />
-        <Text>{this.props.navigation.getParam('title')}</Text>
       </TouchableOpacity>
     );
   }

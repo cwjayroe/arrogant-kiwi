@@ -10,34 +10,84 @@ import RelayViewer from './screens/Relay'
 import RepoDetails from './screens/RepoDetails'
 
 
+const repoScreens = createStackNavigator(
+  {
+    Repos: {
+      screen: Repos,
+      // navigationOptions: ({ navigation }) => ({
+      //   headerRight: <LogoTitle navigation={navigation} />
+      // })
+    },
+    Profile: {
+      screen: Profile,
+    },
+  },
+  {
+    initialRouteName: 'Repos'
+  },
+)
+
+const starsScreens = createStackNavigator(
+  {
+    Stars: {
+      screen: Stars,
+    },
+    Profile: {
+      screen: Profile,
+    },
+  },
+  {
+    initialRouteName: 'Stars'
+  },
+)
+
+const relayScreens = createStackNavigator(
+  {
+    relayRepos: {
+      screen: RelayViewer,
+    },
+    repoDetails: {
+      screen: RepoDetails
+    },
+    Profile: {
+      screen: Profile,
+    },
+  },
+  {
+    initialRouteName: 'relayRepos'
+  },
+)
+
 const tabRoutes = createBottomTabNavigator(
   {
     Repos: { 
-      screen: Repos,
+      screen: repoScreens,
       navigationOptions: {
         tabBarIcon: (
-          <Octicons name="repo" size={25} style={{ marginTop: 10}} />
+          <FontAwesome name="book" size={25} style={{ marginTop: 10}} />
         ),
         tabBarOptions: {
           inactiveTintColor: 'gray',
-          showIcon: true 
+          showIcon: true,
+          showLabel: false
         }
       }
     },
     Stars: { 
-      screen: Stars,
+      screen: starsScreens,
       navigationOptions: {
         tabBarIcon: (
           <FontAwesome name="star" size={25} style={{ marginTop: 10}} />
         ),
         tabBarOptions: {
           inactiveTintColor: 'gray',
-          showIcon: true 
+          showIcon: true,
+          showLabel: false
         }
       }
     },
     Relay: { 
-      screen: RelayViewer,
+      screen: relayScreens,
       navigationOptions: {
         tabBarIcon: (
           <MaterialCommunityIcons name="graphql" size={25} style={{ marginTop: 10}} />
@@ -54,9 +104,6 @@ const tabRoutes = createBottomTabNavigator(
 const Routes = createStackNavigator({
   HomeRT: { 
     screen: tabRoutes,
-    navigationOptions: ({ navigation }) => ({
-      headerRight: <LogoTitle navigation={navigation} />
-    })
   },
   LoginRT: { 
     screen: Login
@@ -67,7 +114,11 @@ const Routes = createStackNavigator({
   ProfileRT: { screen: Profile },
   },
   {
-    initialRouteName: 'LoginRT'
+    initialRouteName: 'LoginRT',
+    headerMode: 'none',
+    navigationOptions: {
+      headerVisible: false
+    }
   }
 )
 

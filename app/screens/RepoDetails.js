@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { QueryRenderer, graphql } from "react-relay";
+import LogoTitle from '../components/LogoTitle'
 import env from '../config/RelayEnv';
 import moment from 'moment';
 
@@ -44,6 +45,13 @@ class RepoDetails extends React.Component{
 }
 
 class RepoDetailsViewer extends React.Component {
+  static navigationOptions = ({navigation, props}) => ({
+    title: navigation.state.params.repoName,
+    headerRight: (
+      <LogoTitle navigation={navigation} />
+    ),
+  });
+
   render() {
     const repoName = this.props.navigation.state.params.repoName
 

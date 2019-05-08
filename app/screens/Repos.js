@@ -19,6 +19,13 @@ class Repos extends React.Component {
     };
   }
 
+  static navigationOptions = ({navigation}) => ({
+    title: 'Repos',
+    headerRight: (
+      <LogoTitle navigation={navigation} />
+    ),
+  });
+
   componentDidMount() {
     WebClient.get_request(`https://api.github.com/users/${this.props.user.email}/repos`)
       .then(responseJson => {

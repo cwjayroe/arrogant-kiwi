@@ -4,6 +4,7 @@ import { QueryRenderer, graphql } from "react-relay";
 import { connect } from 'react-redux';
 import { storeRepos } from '../config/RepoActions'
 import { bindActionCreators } from 'redux';
+import LogoTitle from '../components/LogoTitle'
 import env from '../config/RelayEnv';
 import moment from 'moment';
 
@@ -56,7 +57,7 @@ class RelayView extends Component {
   }
 
   pressRow(repoName) {
-    this.props.navigation.navigate('RepoDetailsRT', { repoName: repoName })
+    this.props.navigation.navigate('repoDetails', { repoName: repoName })
   }
 
   renderRow(rowData) {
@@ -107,6 +108,13 @@ class RelayView extends Component {
 }
 
 class RelayViewer extends React.Component {
+  static navigationOptions = ({navigation}) => ({
+    title: 'Relay Repos',
+    headerRight: (
+      <LogoTitle navigation={navigation} />
+    ),
+  });
+
   render() {
     let storeRepos = this.props.storeRepos
     let navigation = this.props.navigation
@@ -116,6 +124,7 @@ class RelayViewer extends React.Component {
         query={relayQuery}
         render={({error, props}) => {
           if (error) {
+            console.log(error)
             return console.log('errors...');
           }
           if (!props) {

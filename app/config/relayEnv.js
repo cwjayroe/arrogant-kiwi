@@ -6,7 +6,7 @@ function fetchQuery(operation, variables, cacheConfig, uploadables) {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
-      "Authorization": "Bearer fb18e2671ef86258804367e3964131328842adfc"
+      "Authorization": "Bearer "
     },
     body: JSON.stringify({
       query: operation.text,

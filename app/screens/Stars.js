@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, ListView, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import LogoTitle from '../components/LogoTitle'
 
 
 class Stars extends React.Component {
@@ -16,6 +17,13 @@ class Stars extends React.Component {
       repos: ds,
     };
   }
+
+  static navigationOptions = ({navigation}) => ({
+    title: 'Stars',
+    headerRight: (
+      <LogoTitle navigation={navigation} />
+    ),
+  });
 
   componentWillMount() {
     fetch(`https://api.github.com/users/${this.props.user.email}/starred`)

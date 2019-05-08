@@ -30,6 +30,7 @@ class Login extends React.Component{
     })
 
     this.setState({ ...currentState, ...results })
+    this.props.navigation.setParams({testingkey: "Testingvalue"})
 
     if ('userDetails' in this.state) {
       this.props.loginUser(this.state)
