@@ -51,7 +51,7 @@ class Login extends React.Component{
         errorCtrl = 
         <Text style={styles.error}>
             We experienced an unexpected issue
-        </Text>;
+        </Text>
     }
 
     return (

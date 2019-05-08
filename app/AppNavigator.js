@@ -7,6 +7,7 @@ import * as React from 'react'
 import LogoTitle from './components/LogoTitle'
 import { FontAwesome, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import RelayViewer from './screens/Relay'
+import RepoDetails from './screens/RepoDetails'
 
 
 const tabRoutes = createBottomTabNavigator(
@@ -54,11 +55,14 @@ const Routes = createStackNavigator({
   HomeRT: { 
     screen: tabRoutes,
     navigationOptions: ({ navigation }) => ({
-      headerRight: <LogoTitle navigation={navigation}/>
+      headerRight: <LogoTitle navigation={navigation} />
     })
   },
   LoginRT: { 
     screen: Login
+  },
+  RepoDetailsRT: {
+    screen: RepoDetails
   },
   ProfileRT: { screen: Profile },
   },

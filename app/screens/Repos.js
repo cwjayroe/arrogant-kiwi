@@ -1,16 +1,10 @@
 import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ListView,
-  TouchableHighlight,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, StyleSheet, ListView, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
+import LogoTitle from '../components/LogoTitle'
 import moment from 'moment';
 import WebClient from '../components/WebHelper'
+
 
 class Repos extends React.Component {
   constructor(props) {
@@ -28,7 +22,6 @@ class Repos extends React.Component {
   componentDidMount() {
     WebClient.get_request(`https://api.github.com/users/${this.props.user.email}/repos`)
       .then(responseJson => {
-        console.log(responseJson)
         this.setState({ repos: this.state.repos.cloneWithRows(responseJson) });
         }
       ) 

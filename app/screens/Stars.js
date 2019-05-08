@@ -1,13 +1,5 @@
 import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  ListView,
-  TouchableHighlight,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, StyleSheet, ListView, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 

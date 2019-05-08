@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity, Alert, Image, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { FontAwesome, Octicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 class Profile extends React.Component{
   constructor(props){
@@ -10,9 +10,6 @@ class Profile extends React.Component{
 
       this.state = {
       }
-  }
-  componentDidMount(){
-    console.log(this.props)
   }
 
   render() {
@@ -92,7 +89,6 @@ const styles = StyleSheet.create({
   }
 })
 const mapStateToProps = (state) => {
-  console.log(state)
   const { user, repos } = state
   return { user, repos }
 };

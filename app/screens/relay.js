@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
+import { Text, View, StyleSheet, ListView, TouchableHighlight, ActivityIndicator } from 'react-native'
 import { QueryRenderer, graphql } from "react-relay";
-import env from '../config/relayEnv';
 import { connect } from 'react-redux';
-import { storeRepos } from '../config/repoActions'
+import { storeRepos } from '../config/RepoActions'
 import { bindActionCreators } from 'redux';
+import env from '../config/RelayEnv';
 import moment from 'moment';
-import { Text, View, StyleSheet, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
 
 const relayQuery = graphql`
 query RelayQuery {
   viewer {
     repositories(first:10 ownerAffiliations:OWNER) {
       nodes {
+        id
         name
         description
         url
@@ -23,7 +24,6 @@ query RelayQuery {
     }
   }
 }
-
 `
 const mapStateToProps = (state) => {
   const { user } = state
@@ -51,11 +51,15 @@ class RelayView extends Component {
   }
 
   componentDidMount() {
+    this.props.storeRepos(this.props.viewer)
     this.setState({ repos: this.state.repos.cloneWithRows(this.props.viewer.repositories.nodes) });
   }
 
+  pressRow(repoName) {
+    this.props.navigation.navigate('RepoDetailsRT', { repoName: repoName })
+  }
+
   renderRow(rowData) {
-    
     let description = <View />
     let language = <View />
     
@@ -72,7 +76,7 @@ class RelayView extends Component {
 
     return (
       <TouchableHighlight
-        onPress={() => this.pressRow(rowData)}
+        onPress={() => this.pressRow(rowData.name)}
         underlayColor="#ddd">
 
         <View style = {styles.row}>
@@ -105,6 +109,7 @@ class RelayView extends Component {
 class RelayViewer extends React.Component {
   render() {
     let storeRepos = this.props.storeRepos
+    let navigation = this.props.navigation
     return (
       <QueryRenderer
         environment={env}
@@ -120,7 +125,7 @@ class RelayViewer extends React.Component {
                     style={styles.loader}
                   />
           }
-          return <RelayView {...props} storeRepos={storeRepos} />;
+          return <RelayView {...props} storeRepos={storeRepos} navigation={navigation} />;
         }}
       />
     )

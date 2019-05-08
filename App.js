@@ -2,7 +2,7 @@ import * as React from 'react';
 import AppNavigator from './app/AppNavigator'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import combineReducers from './app/config/reducers';
+import combineReducers from './app/config/Reducers';
 
 const store = createStore(combineReducers);
 

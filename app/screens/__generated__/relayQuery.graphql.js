@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eb99142f2ba6c7ad4414f7d66804fa44
+ * @relayHash 9d6c3c6fa4e1964d00127f7acd7666fb
  */
 
 /* eslint-disable */
@@ -14,6 +14,7 @@ export type RelayQueryResponse = {|
   +viewer: {|
     +repositories: {|
       +nodes: ?$ReadOnlyArray<?{|
+        +id: string,
         +name: string,
         +description: ?string,
         +url: any,
@@ -37,6 +38,7 @@ query RelayQuery {
   viewer {
     repositories(first: 10, ownerAffiliations: OWNER) {
       nodes {
+        id
         name
         description
         url
@@ -45,7 +47,6 @@ query RelayQuery {
           name
           id
         }
-        id
       }
     }
     id
@@ -69,35 +70,35 @@ var v0 = [
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "name",
+  "name": "id",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "description",
+  "name": "name",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "url",
+  "name": "description",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "pushedAt",
+  "name": "url",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "pushedAt",
   "args": null,
   "storageKey": null
 };
@@ -141,6 +142,7 @@ return {
                   (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -150,7 +152,7 @@ return {
                     "concreteType": "Language",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/)
+                      (v2/*: any*/)
                     ]
                   }
                 ]
@@ -197,6 +199,7 @@ return {
                   (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -206,16 +209,15 @@ return {
                     "concreteType": "Language",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
-                      (v5/*: any*/)
+                      (v2/*: any*/),
+                      (v1/*: any*/)
                     ]
-                  },
-                  (v5/*: any*/)
+                  }
                 ]
               }
             ]
           },
-          (v5/*: any*/)
+          (v1/*: any*/)
         ]
       }
     ]
@@ -224,11 +226,11 @@ return {
     "operationKind": "query",
     "name": "RelayQuery",
     "id": null,
-    "text": "query RelayQuery {\n  viewer {\n    repositories(first: 10, ownerAffiliations: OWNER) {\n      nodes {\n        name\n        description\n        url\n        pushedAt\n        primaryLanguage {\n          name\n          id\n        }\n        id\n      }\n    }\n    id\n  }\n}\n",
+    "text": "query RelayQuery {\n  viewer {\n    repositories(first: 10, ownerAffiliations: OWNER) {\n      nodes {\n        id\n        name\n        description\n        url\n        pushedAt\n        primaryLanguage {\n          name\n          id\n        }\n      }\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '2ad48b6f772b2c30ee5e93177cfdd979';
+(node/*: any*/).hash = '73d9ae866946343d96c8e705cb6413f1';
 module.exports = node;
