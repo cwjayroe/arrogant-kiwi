@@ -47,9 +47,6 @@ class RepoDetails extends React.Component{
 class RepoDetailsViewer extends React.Component {
   static navigationOptions = ({navigation, props}) => ({
     title: navigation.state.params.repoName,
-    headerRight: (
-      <LogoTitle navigation={navigation} />
-    ),
   });
 
   render() {

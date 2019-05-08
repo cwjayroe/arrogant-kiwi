@@ -14,16 +14,23 @@ const repoScreens = createStackNavigator(
   {
     Repos: {
       screen: Repos,
-      // navigationOptions: ({ navigation }) => ({
-      //   headerRight: <LogoTitle navigation={navigation} />
-      // })
+      navigationOptions: {
+        title: "Repos"
+      }
+      
     },
     Profile: {
       screen: Profile,
+      navigationOptions: {
+        title: "Profile"
+      }
     },
   },
   {
-    initialRouteName: 'Repos'
+    initialRouteName: 'Repos',
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerRight: <LogoTitle navigation={navigation} />
+    })
   },
 )
 
@@ -31,13 +38,22 @@ const starsScreens = createStackNavigator(
   {
     Stars: {
       screen: Stars,
+      navigationOptions: {
+        title: "Stars"
+      }
     },
     Profile: {
       screen: Profile,
+      navigationOptions: {
+        title: "Profile"
+      }
     },
   },
   {
-    initialRouteName: 'Stars'
+    initialRouteName: 'Stars',
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerRight: <LogoTitle navigation={navigation} />
+    })
   },
 )
 
@@ -45,16 +61,25 @@ const relayScreens = createStackNavigator(
   {
     relayRepos: {
       screen: RelayViewer,
+      navigationOptions: {
+        title: "Relay Repos"
+      }
     },
     repoDetails: {
-      screen: RepoDetails
+      screen: RepoDetails,
     },
     Profile: {
       screen: Profile,
+      navigationOptions: {
+        title: "Profile"
+      }
     },
   },
   {
-    initialRouteName: 'relayRepos'
+    initialRouteName: 'relayRepos',
+    defaultNavigationOptions: ({ navigation }) => ({
+      headerRight: <LogoTitle navigation={navigation} />
+    })
   },
 )
 
@@ -94,7 +119,8 @@ const tabRoutes = createBottomTabNavigator(
         ),
         tabBarOptions: {
           inactiveTintColor: 'gray',
-          showIcon: true
+          showIcon: true,
+          showLabel: false
         }
       }
     }
@@ -102,16 +128,12 @@ const tabRoutes = createBottomTabNavigator(
 )
 
 const Routes = createStackNavigator({
-  HomeRT: { 
-    screen: tabRoutes,
-  },
-  LoginRT: { 
-    screen: Login
-  },
-  RepoDetailsRT: {
-    screen: RepoDetails
-  },
-  ProfileRT: { screen: Profile },
+    HomeRT: { 
+      screen: tabRoutes,
+    },
+    LoginRT: { 
+      screen: Login
+    }
   },
   {
     initialRouteName: 'LoginRT',

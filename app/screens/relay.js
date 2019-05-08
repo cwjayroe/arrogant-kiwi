@@ -108,13 +108,6 @@ class RelayView extends Component {
 }
 
 class RelayViewer extends React.Component {
-  static navigationOptions = ({navigation}) => ({
-    title: 'Relay Repos',
-    headerRight: (
-      <LogoTitle navigation={navigation} />
-    ),
-  });
-
   render() {
     let storeRepos = this.props.storeRepos
     let navigation = this.props.navigation

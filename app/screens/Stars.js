@@ -18,13 +18,6 @@ class Stars extends React.Component {
     };
   }
 
-  static navigationOptions = ({navigation}) => ({
-    title: 'Stars',
-    headerRight: (
-      <LogoTitle navigation={navigation} />
-    ),
-  });
-
   componentWillMount() {
     fetch(`https://api.github.com/users/${this.props.user.email}/starred`)
       .then(response => {
