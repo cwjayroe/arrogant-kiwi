@@ -1,25 +1,27 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ListView, TouchableHighlight } from 'react-native';
+import { Text, View, StyleSheet, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import LogoTitle from '../components/LogoTitle'
+import { FlatList } from 'react-native-gesture-handler';
 
 
 class Stars extends React.Component {
   constructor(props) {
     super(props);
 
-    var ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 != r2,
-    });
-
     this.state = {
-      repos: ds,
+      page: 1,
+      repos: []
     };
   }
 
-  componentWillMount() {
-    fetch(`https://api.github.com/users/${this.props.user.email}/starred`)
+  componentDidMount() {
+    this.fetchStarred()
+  }
+
+  fetchStarred = () => {
+    fetch(`https://api.github.com/users/${this.props.user.email}/starred?page=${this.state.page}&per_page=10`)
       .then(response => {
         if (response.status >= 200 && response.status < 300) {
           let responseJson = response.json();
@@ -32,11 +34,22 @@ class Stars extends React.Component {
         };
       })
       .then(responseJson => {
-        this.setState({ repos: this.state.repos.cloneWithRows(responseJson) });
+        console.log('fetching.....')
+        this.setState({ 
+          repos:  [...this.state.repos, ...responseJson]
+        });
       })
       .catch(error => {
         console.log(error);
       });
+  }
+
+  handleLoadMore = () => {
+    this.setState({
+      page: this.state.page + 1 
+    }, () => {
+      this.fetchStarred()
+    }) 
   }
 
   renderRow(rowData) {
@@ -78,9 +91,12 @@ class Stars extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Your Stars</Text>
-        <ListView
-          dataSource={this.state.repos}
-          renderRow={this.renderRow.bind(this)}
+        <FlatList
+          data={this.state.repos}
+          renderItem = {({item}) => this.renderRow(item)}
+          keyExtractor={(item, id) => id.toString()}
+          onEndReached={() => this.handleLoadMore()}
+          onEndReachedThreshold={0.01}
         />
       </View>
     );

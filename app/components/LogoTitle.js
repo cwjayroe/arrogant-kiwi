@@ -3,10 +3,6 @@ import { Image,  TouchableOpacity, Text } from 'react-native'
 import { connect } from 'react-redux';
 
 class LogoTitle extends React.Component {
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
