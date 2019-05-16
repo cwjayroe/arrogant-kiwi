@@ -48,15 +48,28 @@ class StarList extends React.Component {
       </TouchableHighlight>
     );
   }
+  _loadMore() {
+    if (!this.props.relay.hasMore() || this.props.relay.isLoading()) {
+      return;
+    }
+
+    this.props.relay.loadMore(
+      error => {
+        console.log(error);
+      },
+    );
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Your Stars</Text>
         <FlatList
-          data={this.props.starredRepos.starredRepositories.nodes}
-          renderItem = {({item}) => this.renderRow(item)}
+          data={this.props.starredRepos.starredRepositories.edges}
+          renderItem = {({item}) => this.renderRow(item.node)}
           keyExtractor={(item, id) => id.toString()}
+          onEndReached={() => this._loadMore()}
+          onEndReachedThreshold={0.01}
         />
       </View>
     );
@@ -67,8 +80,8 @@ const StarListRenderer = createPaginationContainer(
   StarList, 
   {
     starredRepos: graphql`
-      fragment StarsPage_starredRepos on User @argumentDefinitions (endCursor: {type: "String"}) {
-        starredRepositories(first: 5 after:$endCursor) @connection(key: "StarsPage_starredRepositories") { 
+      fragment StarsPage_starredRepos on User @argumentDefinitions (endCursor: {type: "String"}, count: {type: "Int"}) {
+        starredRepositories(first:$count after:$endCursor) @connection(key: "StarsPage_starredRepositories") { 
           edges {
             cursor
             node {
@@ -95,23 +108,18 @@ const StarListRenderer = createPaginationContainer(
 {
   direction: 'forward',
   getConnectionFromProps(props) {
-    return props.starredRepos && props.starredRepos.starredRepositories;
+    return props.starredRepos.starredRepositories;
   },
   getVariables(props, paginationInfo, fragmentVariables) {
     return {
-      after: paginationInfo.endCursor,
+      endCursor: props.starredRepos.starredRepositories.pageInfo.endCursor,
+      count: 2
     }
   },
-  getFragmentVariables(prevVars, totalCount) {
-    return {
-      ...prevVars,
-      count: totalCount,
-    };
-  },
   query: graphql`
-    query StarsPageForward_Query {
+    query StarsPageForward_Query($count: Int, $endCursor: String) {
       starredRepos: viewer {
-        ...StarsPage_starredRepos
+        ...StarsPage_starredRepos @arguments(count: $count, endCursor: $endCursor)
       }
     }
   `
@@ -124,12 +132,13 @@ export default class StarredRepositoriesPage extends Component {
       <QueryRenderer
         environment={env}
         query={graphql`
-        query StarsPage_Query {
+        query StarsPage_Query($count: Int, $endCursor: String) {
           starredRepos: viewer {
-            ...StarsPage_starredRepos
+            ...StarsPage_starredRepos @arguments(count: $count, endCursor: $endCursor)
           }
         }
         `}
+        variables={{endCursor: null, count: 5}}
         render={({error, props}) => {
           if (error) {
             console.log(error)

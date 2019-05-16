@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e821539cd86bec1861f703990120f395
+ * @relayHash 59afefb66df565ae8ae5b6d058b53f6d
  */
 
 /* eslint-disable */
@@ -10,7 +10,10 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type StarsPage_starredRepos$ref = any;
-export type StarsPage_QueryVariables = {||};
+export type StarsPage_QueryVariables = {|
+  count?: ?number,
+  endCursor?: ?string,
+|};
 export type StarsPage_QueryResponse = {|
   +starredRepos: {|
     +$fragmentRefs: StarsPage_starredRepos$ref
@@ -24,15 +27,18 @@ export type StarsPage_Query = {|
 
 
 /*
-query StarsPage_Query {
+query StarsPage_Query(
+  $count: Int
+  $endCursor: String
+) {
   starredRepos: viewer {
-    ...StarsPage_starredRepos
+    ...StarsPage_starredRepos_1rxGmr
     id
   }
 }
 
-fragment StarsPage_starredRepos on User {
-  starredRepositories(first: 5) {
+fragment StarsPage_starredRepos_1rxGmr on User {
+  starredRepositories(first: $count, after: $endCursor) {
     edges {
       cursor
       node {
@@ -61,19 +67,38 @@ fragment StarsPage_starredRepos on User {
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 5
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "endCursor",
+    "type": "String",
+    "defaultValue": null
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "endCursor"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count"
+  }
+],
+v2 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v2 = {
+v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -87,7 +112,7 @@ return {
     "name": "StarsPage_Query",
     "type": "Query",
     "metadata": null,
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -101,7 +126,18 @@ return {
           {
             "kind": "FragmentSpread",
             "name": "StarsPage_starredRepos",
-            "args": null
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "count",
+                "variableName": "count"
+              },
+              {
+                "kind": "Variable",
+                "name": "endCursor",
+                "variableName": "endCursor"
+              }
+            ]
           }
         ]
       }
@@ -110,7 +146,7 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "StarsPage_Query",
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
@@ -125,8 +161,8 @@ return {
             "kind": "LinkedField",
             "alias": null,
             "name": "starredRepositories",
-            "storageKey": "starredRepositories(first:5)",
-            "args": (v0/*: any*/),
+            "storageKey": null,
+            "args": (v1/*: any*/),
             "concreteType": "StarredRepositoryConnection",
             "plural": false,
             "selections": [
@@ -164,8 +200,8 @@ return {
                         "concreteType": "Language",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          (v2/*: any*/)
+                          (v2/*: any*/),
+                          (v3/*: any*/)
                         ]
                       },
                       {
@@ -175,7 +211,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -190,7 +226,7 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -247,12 +283,12 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "starredRepositories",
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "handle": "connection",
             "key": "StarsPage_starredRepositories",
             "filters": null
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ]
       }
     ]
@@ -261,11 +297,11 @@ return {
     "operationKind": "query",
     "name": "StarsPage_Query",
     "id": null,
-    "text": "query StarsPage_Query {\n  starredRepos: viewer {\n    ...StarsPage_starredRepos\n    id\n  }\n}\n\nfragment StarsPage_starredRepos on User {\n  starredRepositories(first: 5) {\n    edges {\n      cursor\n      node {\n        primaryLanguage {\n          name\n          id\n        }\n        description\n        name\n        url\n        createdAt\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n",
+    "text": "query StarsPage_Query(\n  $count: Int\n  $endCursor: String\n) {\n  starredRepos: viewer {\n    ...StarsPage_starredRepos_1rxGmr\n    id\n  }\n}\n\nfragment StarsPage_starredRepos_1rxGmr on User {\n  starredRepositories(first: $count, after: $endCursor) {\n    edges {\n      cursor\n      node {\n        primaryLanguage {\n          name\n          id\n        }\n        description\n        name\n        url\n        createdAt\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '39a00dc5a8856ee6a46ecba767d768c0';
+(node/*: any*/).hash = '8ce9bee8c89815aa601d4f99cbb7303d';
 module.exports = node;

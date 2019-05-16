@@ -58,7 +58,7 @@ return {
   "metadata": {
     "connection": [
       {
-        "count": null,
+        "count": "count",
         "cursor": "endCursor",
         "direction": "forward",
         "path": [
@@ -72,6 +72,12 @@ return {
       "kind": "LocalArgument",
       "name": "endCursor",
       "type": "String",
+      "defaultValue": null
+    },
+    {
+      "kind": "LocalArgument",
+      "name": "count",
+      "type": "Int",
       "defaultValue": null
     }
   ],
@@ -207,5 +213,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4f8f45a6688aeaade5466fd8d3d3bfed';
+(node/*: any*/).hash = '7632c4de18b391ad1d72d45dda5df5f4';
 module.exports = node;
