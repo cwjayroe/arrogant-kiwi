@@ -13,17 +13,22 @@ declare export opaque type StarsPage_starredRepos$ref: FragmentReference;
 declare export opaque type StarsPage_starredRepos$fragmentType: StarsPage_starredRepos$ref;
 export type StarsPage_starredRepos = {|
   +starredRepositories: {|
-    +nodes: ?$ReadOnlyArray<?{|
-      +primaryLanguage: ?{|
-        +name: string
+    +edges: ?$ReadOnlyArray<?{|
+      +cursor: string,
+      +node: {|
+        +primaryLanguage: ?{|
+          +name: string
+        |},
+        +description: ?string,
+        +name: string,
+        +url: any,
+        +createdAt: any,
+        +id: string,
       |},
-      +description: ?string,
-      +name: string,
-      +url: any,
-      +createdAt: any,
-      +id: string,
     |}>,
     +pageInfo: {|
+      +hasNextPage: boolean,
+      +hasPreviousPage: boolean,
       +endCursor: ?string,
       +startCursor: ?string,
     |},
@@ -50,73 +55,110 @@ return {
   "kind": "Fragment",
   "name": "StarsPage_starredRepos",
   "type": "User",
-  "metadata": null,
-  "argumentDefinitions": [],
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": "endCursor",
+        "direction": "forward",
+        "path": [
+          "starredRepositories"
+        ]
+      }
+    ]
+  },
+  "argumentDefinitions": [
+    {
+      "kind": "LocalArgument",
+      "name": "endCursor",
+      "type": "String",
+      "defaultValue": null
+    }
+  ],
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": null,
-      "name": "starredRepositories",
-      "storageKey": "starredRepositories(first:5)",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 5
-        }
-      ],
+      "alias": "starredRepositories",
+      "name": "__StarsPage_starredRepositories_connection",
+      "storageKey": null,
+      "args": null,
       "concreteType": "StarredRepositoryConnection",
       "plural": false,
       "selections": [
         {
           "kind": "LinkedField",
           "alias": null,
-          "name": "nodes",
+          "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "Repository",
+          "concreteType": "StarredRepositoryEdge",
           "plural": true,
           "selections": [
             {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "cursor",
+              "args": null,
+              "storageKey": null
+            },
+            {
               "kind": "LinkedField",
               "alias": null,
-              "name": "primaryLanguage",
+              "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Language",
+              "concreteType": "Repository",
               "plural": false,
               "selections": [
-                (v0/*: any*/)
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "primaryLanguage",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "Language",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/)
+                  ]
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "description",
+                  "args": null,
+                  "storageKey": null
+                },
+                (v0/*: any*/),
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "url",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "createdAt",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "id",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "__typename",
+                  "args": null,
+                  "storageKey": null
+                }
               ]
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "description",
-              "args": null,
-              "storageKey": null
-            },
-            (v0/*: any*/),
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "url",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "createdAt",
-              "args": null,
-              "storageKey": null
-            },
-            {
-              "kind": "ScalarField",
-              "alias": null,
-              "name": "id",
-              "args": null,
-              "storageKey": null
             }
           ]
         },
@@ -129,6 +171,20 @@ return {
           "concreteType": "PageInfo",
           "plural": false,
           "selections": [
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "hasNextPage",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "hasPreviousPage",
+              "args": null,
+              "storageKey": null
+            },
             {
               "kind": "ScalarField",
               "alias": null,
@@ -151,5 +207,5 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '714009ba54c7126d6c4e777dab941f54';
+(node/*: any*/).hash = '4f8f45a6688aeaade5466fd8d3d3bfed';
 module.exports = node;

@@ -63,28 +63,60 @@ class StarList extends React.Component {
   }
 }
 
-const StarListRenderer = createFragmentContainer(StarList, {
-  starredRepos: graphql`
-    fragment StarsPage_starredRepos on User {
-      starredRepositories(first: 5) { 
-        nodes {
-          primaryLanguage {
-            name
+const StarListRenderer = createPaginationContainer(
+  StarList, 
+  {
+    starredRepos: graphql`
+      fragment StarsPage_starredRepos on User @argumentDefinitions (endCursor: {type: "String"}) {
+        starredRepositories(first: 5 after:$endCursor) @connection(key: "StarsPage_starredRepositories") { 
+          edges {
+            cursor
+            node {
+              primaryLanguage {
+                name
+              }
+              description
+              name
+              url
+              createdAt
+              id
+            }
           }
-          description
-          name
-          url
-          createdAt
-          id
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            endCursor
+            startCursor
+          }
         }
-        pageInfo {
-          endCursor
-          startCursor
-        }
+      }
+    `
+},
+{
+  direction: 'forward',
+  getConnectionFromProps(props) {
+    return props.starredRepos && props.starredRepos.starredRepositories;
+  },
+  getVariables(props, paginationInfo, fragmentVariables) {
+    return {
+      after: paginationInfo.endCursor,
+    }
+  },
+  getFragmentVariables(prevVars, totalCount) {
+    return {
+      ...prevVars,
+      count: totalCount,
+    };
+  },
+  query: graphql`
+    query StarsPageForward_Query {
+      starredRepos: viewer {
+        ...StarsPage_starredRepos
       }
     }
   `
-});
+}
+);
 
 export default class StarredRepositoriesPage extends Component {
   render() {
@@ -100,7 +132,8 @@ export default class StarredRepositoriesPage extends Component {
         `}
         render={({error, props}) => {
           if (error) {
-            return <Text>{error.message}</Text>
+            console.log(error)
+            return <Text>Error: {error.message}</Text>
           } else if (props) {
             return <StarListRenderer starredRepos={props.starredRepos} />
           }

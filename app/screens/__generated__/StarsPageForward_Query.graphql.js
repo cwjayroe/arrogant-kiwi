@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash e821539cd86bec1861f703990120f395
+ * @relayHash e23f5fd94bc6302c0265fe36f4758fa1
  */
 
 /* eslint-disable */
@@ -10,21 +10,21 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type StarsPage_starredRepos$ref = any;
-export type StarsPage_QueryVariables = {||};
-export type StarsPage_QueryResponse = {|
+export type StarsPageForward_QueryVariables = {||};
+export type StarsPageForward_QueryResponse = {|
   +starredRepos: {|
     +$fragmentRefs: StarsPage_starredRepos$ref
   |}
 |};
-export type StarsPage_Query = {|
-  variables: StarsPage_QueryVariables,
-  response: StarsPage_QueryResponse,
+export type StarsPageForward_Query = {|
+  variables: StarsPageForward_QueryVariables,
+  response: StarsPageForward_QueryResponse,
 |};
 */
 
 
 /*
-query StarsPage_Query {
+query StarsPageForward_Query {
   starredRepos: viewer {
     ...StarsPage_starredRepos
     id
@@ -84,7 +84,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "StarsPage_Query",
+    "name": "StarsPageForward_Query",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -109,7 +109,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "StarsPage_Query",
+    "name": "StarsPageForward_Query",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -259,13 +259,13 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "StarsPage_Query",
+    "name": "StarsPageForward_Query",
     "id": null,
-    "text": "query StarsPage_Query {\n  starredRepos: viewer {\n    ...StarsPage_starredRepos\n    id\n  }\n}\n\nfragment StarsPage_starredRepos on User {\n  starredRepositories(first: 5) {\n    edges {\n      cursor\n      node {\n        primaryLanguage {\n          name\n          id\n        }\n        description\n        name\n        url\n        createdAt\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n",
+    "text": "query StarsPageForward_Query {\n  starredRepos: viewer {\n    ...StarsPage_starredRepos\n    id\n  }\n}\n\nfragment StarsPage_starredRepos on User {\n  starredRepositories(first: 5) {\n    edges {\n      cursor\n      node {\n        primaryLanguage {\n          name\n          id\n        }\n        description\n        name\n        url\n        createdAt\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      endCursor\n      startCursor\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '39a00dc5a8856ee6a46ecba767d768c0';
+(node/*: any*/).hash = '243ac7b92a5380a2f5a97510cb8c5e6d';
 module.exports = node;
