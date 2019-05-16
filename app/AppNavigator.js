@@ -8,7 +8,7 @@ import LogoTitle from './components/LogoTitle'
 import { FontAwesome, Octicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import RelayViewer from './screens/Relay'
 import RepoDetails from './screens/RepoDetails'
-
+import StarredRepositoriesPage from './screens/StarsPage'
 
 const repoScreens = createStackNavigator(
   {
@@ -37,7 +37,7 @@ const repoScreens = createStackNavigator(
 const starsScreens = createStackNavigator(
   {
     Stars: {
-      screen: Stars,
+      screen: StarredRepositoriesPage,
       navigationOptions: {
         title: "Stars"
       }

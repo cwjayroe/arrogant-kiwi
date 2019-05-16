@@ -1,63 +1,22 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, ListView, TouchableHighlight, ActivityIndicator } from 'react-native';
-import { connect } from 'react-redux';
+// @flow
+import React, { Component } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableHighlight
+} from 'react-native';
+import env from '../config/RelayEnv'
+import {
+  createFragmentContainer,
+  createPaginationContainer,
+  graphql, QueryRenderer
+} from 'react-relay';
 import moment from 'moment';
-import { FlatList } from 'react-native-gesture-handler';
-import { QueryRenderer, graphql } from "react-relay";
-import env from '../config/RelayEnv';
 
-const starsQuery = graphql`
-query StarsQuery($endCursor: String!) {
-  viewer {
-    starredRepositories(first: 5 after:$endCursor) {
-      nodes {
-        primaryLanguage {
-          name
-        }
-        description
-        name
-        url
-        createdAt
-        id
-      }
-      pageInfo {
-        endCursor
-        startCursor
-      }
-    }
-  }
-}
-`
-
-class Stars extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      page: 1,
-      repos: []
-    };
-  }
-  
-  componentDidMount() {
-    this.loadStars()
-  }
-
-  loadStars() {
-    this.setState({
-      repos: [...repos, ...this.props.viewer.starredRepositories.nodes]
-    })
-  }
-
-  loadMoreStars() {
-    this.setState({
-      endCursor: this.props.pageInfo.endCursor
-    })
-    console.log('ennnnnnd')
-  }
-
+class StarList extends React.Component {
   renderRow(rowData) {
-    
     let description = <View />
     let language = <View />
 
@@ -95,44 +54,64 @@ class Stars extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>Your Stars</Text>
         <FlatList
-          data={this.state.repos}
+          data={this.props.starredRepos.starredRepositories.nodes}
           renderItem = {({item}) => this.renderRow(item)}
           keyExtractor={(item, id) => id.toString()}
-          onEndReached={() => this.loadMoreStars()}
-          onEndReachedThreshold={0.01}
         />
       </View>
     );
   }
 }
 
-class StarsViewer extends React.Component {
+const StarListRenderer = createFragmentContainer(StarList, {
+  starredRepos: graphql`
+    fragment StarsPage_starredRepos on User {
+      starredRepositories(first: 5) { 
+        nodes {
+          primaryLanguage {
+            name
+          }
+          description
+          name
+          url
+          createdAt
+          id
+        }
+        pageInfo {
+          endCursor
+          startCursor
+        }
+      }
+    }
+  `
+});
+
+export default class StarredRepositoriesPage extends Component {
   render() {
-    let navigation = this.props.navigation
-    let pageInfo = this.props.pageInfo
     return (
       <QueryRenderer
         environment={env}
-        query={starsQuery}
-        variables={{endCursor: this.state.endCursor}}
+        query={graphql`
+        query StarsPage_Query {
+          starredRepos: viewer {
+            ...StarsPage_starredRepos
+          }
+        }
+        `}
         render={({error, props}) => {
           if (error) {
-            console.log(error)
-            return console.log('errors...');
+            return <Text>{error.message}</Text>
+          } else if (props) {
+            return <StarListRenderer starredRepos={props.starredRepos} />
           }
-          if (!props) {
-            return <ActivityIndicator
-                    animating={true}
-                    size="large"
-                    style={styles.loader}
-                  />
-          }
-          return <Stars {...props} navigation={navigation} pageInfo={pageInfo} />;
+          return <Text>Loading</Text>
         }}
       />
     )
   }
 }
+
+
 
 const styles = StyleSheet.create({
   flex_direction: {
@@ -171,10 +150,3 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
 });
-
-const mapStateToProps = state => {
-  const { user } = state;
-  return { user };
-};
-
-export default connect(mapStateToProps)(StarsViewer);

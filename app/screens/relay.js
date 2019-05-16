@@ -4,7 +4,6 @@ import { QueryRenderer, graphql } from "react-relay";
 import { connect } from 'react-redux';
 import { storeRepos } from '../config/RepoActions'
 import { bindActionCreators } from 'redux';
-import LogoTitle from '../components/LogoTitle'
 import env from '../config/RelayEnv';
 import moment from 'moment';
 
